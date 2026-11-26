@@ -1,0 +1,15 @@
+# Secrets - never upload
+.env
+.streamlit/secrets.toml
+
+# Virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local SQLite database (recreated automatically on start)
+data/*.db

@@ -1,0 +1,28 @@
+{
+  "business_name": "Al Manara Facility Services",
+  "tagline": "Cleaning, maintenance and pest control for homes and offices in Bahrain.",
+  "phone": "+973 1700 0000",
+  "website": "https://example.com",
+  "offer": "Free site visit and written quotation within 24 hours. Book this month and get your first deep clean at 10% off.",
+  "offer_ar": "زيارة موقع مجانية وعرض سعر مكتوب خلال 24 ساعة. احجز هذا الشهر واحصل على خصم 10% على أول تنظيف عميق.",
+  "services": [
+    {"key": "cleaning", "label": "Cleaning", "label_ar": "خدمات التنظيف",
+     "keywords": ["clean", "cleaning", "cleaner", "maid", "housekeeping", "deep clean", "carpet", "sofa", "تنظيف", "نظافة", "عاملة", "سجاد"]},
+    {"key": "ac_maintenance", "label": "AC maintenance", "label_ar": "صيانة المكيفات",
+     "keywords": ["ac", "a/c", "air con", "aircon", "air conditioner", "cooling", "hvac", "مكيف", "تكييف", "المكيف"]},
+    {"key": "pest_control", "label": "Pest control", "label_ar": "مكافحة الحشرات",
+     "keywords": ["pest", "cockroach", "termite", "rat", "rats", "mice", "bed bug", "ants", "حشرات", "صراصير", "نمل", "فئران", "مكافحة"]},
+    {"key": "fit_out", "label": "Renovation and fit-out", "label_ar": "الترميم والديكور",
+     "keywords": ["renovation", "renovate", "fit-out", "fitout", "paint", "painting", "tiles", "carpentry", "gypsum", "ترميم", "دهان", "ديكور", "بلاط"]},
+    {"key": "landscaping", "label": "Landscaping and plants", "label_ar": "تنسيق الحدائق والنباتات",
+     "keywords": ["garden", "landscap", "plant", "plants", "lawn", "irrigation", "حديقة", "حدائق", "نباتات", "زراعة"]}
+  ],
+  "areas": [
+    {"en": "Manama", "ar": "المنامة"}, {"en": "Muharraq", "ar": "المحرق"}, {"en": "Riffa", "ar": "الرفاع"},
+    {"en": "Juffair", "ar": "جفير"}, {"en": "Seef", "ar": "السيف"}, {"en": "Busaiteen", "ar": "البسيتين"},
+    {"en": "Isa Town", "ar": "مدينة عيسى"}, {"en": "Hamad Town", "ar": "مدينة حمد"}, {"en": "Sitra", "ar": "سترة"},
+    {"en": "Saar", "ar": "سار"}, {"en": "Budaiya", "ar": "البديع"}, {"en": "Amwaj", "ar": "أمواج"},
+    {"en": "Adliya", "ar": "العدلية"}, {"en": "Hidd", "ar": "الحد"}, {"en": "Tubli", "ar": "توبلي"},
+    {"en": "Zallaq", "ar": "الزلاق"}, {"en": "Sanabis", "ar": "السنابس"}, {"en": "Diplomatic Area", "ar": "المنطقة الدبلوماسية"}
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "name": "P2 - Bilingual Marketing Automation (skeleton)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "marketing-lead",
+        "responseMode": "responseNode"
+      },
+      "id": "735abaec-96a8-428a-93ff-f834e556f0f1",
+      "name": "Lead form webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $input.first().json.body || {};\nconst email = String(b.email || '').trim().toLowerCase();\nif (!/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(email)) throw new Error('invalid email');\nreturn [{ json: { email, name: b.name || null, language: ['en','ar','both'].includes(b.language) ? b.language : 'en', interest: b.interest || null } }];"
+      },
+      "id": "61f413b9-4ea0-4edb-8ac1-988e38134a10",
+      "name": "Validate email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "253f0abc-6852-40cc-8a0e-f6aa656f5bfc",
+      "name": "CRM: upsert contact (placeholder)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $env.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-5-5', max_tokens: 400, system: 'Write a short welcome email (max 90 words) in ' + ($json.language === 'ar' ? 'Arabic' : 'English') + '. Never invent prices or discounts. Return ONLY JSON {subject, body}.', messages: [{ role: 'user', content: 'Name: ' + $json.name + ', interest: ' + $json.interest }] }) }}"
+      },
+      "id": "42dbc242-115a-4c9f-ba3a-9232c4ae0af6",
+      "name": "AI: write welcome email (HTTP)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        440,
+        400
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "f63ae954-8a50-4000-a290-26c92c7d8bce",
+      "name": "Send email (placeholder: Gmail / SMTP)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        660,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 2,
+        "unit": "days"
+      },
+      "id": "bc1c1be1-d59f-4b7e-9291-c70cf4a90c1a",
+      "name": "Wait 2 days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        400
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "dc134d29-9cc0-4789-92a1-00676ab2e91d",
+      "name": "Next drip email (placeholder)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { subscribed: true } }}"
+      },
+      "id": "80314bc0-6a40-469e-a1e0-75522e2cd393",
+      "name": "Respond 200",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        660,
+        560
+      ]
+    }
+  ],
+  "connections": {
+    "Lead form webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate email": {
+      "main": [
+        [
+          {
+            "node": "CRM: upsert contact (placeholder)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI: write welcome email (HTTP)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI: write welcome email (HTTP)": {
+      "main": [
+        [
+          {
+            "node": "Send email (placeholder: Gmail / SMTP)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email (placeholder: Gmail / SMTP)": {
+      "main": [
+        [
+          {
+            "node": "Wait 2 days",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond 200",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2 days": {
+      "main": [
+        [
+          {
+            "node": "Next drip email (placeholder)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
